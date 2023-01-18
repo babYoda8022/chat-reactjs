@@ -18,17 +18,6 @@ export default function Register() {
           </div>
           <div className="box-2">
             <button className="button-login">Create</button>
-            <p>Or</p>
-            <div>
-              <button>
-                <i class="bi bi-google"></i>
-                Create whit Google
-              </button>
-              <button>
-                <i class="bi bi-facebook"></i>
-                Create whith Faceboock
-              </button>
-            </div>
           </div>
         </div>
       </div>
