@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Login from "./screens/login/login"
 import Register from "./screens/register/register"
+import Chat from './screens/chat/chat'
 
 export default function App() {
 
@@ -13,6 +14,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/chat' element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </div>

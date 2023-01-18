@@ -1,9 +1,36 @@
 
 import "./login.css"
+import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth"
+import { auth } from "../../service/firebase"
 
-import {Link} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 export default function Login() {
+
+  const navegate = useNavigate()
+
+  function signInWithFacebook(){
+    const provider = new FacebookAuthProvider()
+    signInWithPopup(auth, provider)
+    .then((respo)=>{
+      console.log(respo)
+      navegate("/chat")
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
+
+  function signInWithGoogle(){
+    const provider = new GoogleAuthProvider()
+    signInWithPopup(auth, provider)
+    .then((respo)=>{
+      console.log(respo)
+      navegate("/chat")
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
 
   return (
     <div className="login">
@@ -22,11 +49,11 @@ export default function Login() {
             <button className="button-login">Sign in</button>
             <p>Or</p>
             <div>
-              <button>
+              <button onClick={()=>signInWithGoogle()}>
                 <i class="bi bi-google"></i>
                 Continue whit Google
               </button>
-              <button>
+              <button onClick={()=>signInWithFacebook()}>
                 <i class="bi bi-facebook"></i>
                 Continue whith Faceboock
               </button>
