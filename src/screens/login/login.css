@@ -1,0 +1,154 @@
+
+.login{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container{
+    background-color: var(--cian-900);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-content{
+    width: 35rem;
+}
+
+.container .container-content h1{
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--white-100);
+    margin-bottom: 4rem;
+}
+
+.container .container-content p{
+    font-size: 1.5rem;
+    color: var(--white-400);
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.container .container-content, 
+.box, 
+.box-2{
+    display: flex;
+    flex-direction: column;
+}
+
+.container .container-content .box input{
+    font-size: 1.6rem;
+    background: none;
+    border: .2rem solid;
+    border-color: var(--white-400);
+    border-radius: .8rem;
+    padding: .8rem 1rem .8rem 1rem;
+    color: var(--white-100);
+    margin: 1rem 0;
+    outline: none;
+}
+
+
+.container .container-content .box input::placeholder{
+    font-weight: 500;
+    color: var(--white-500);
+}
+
+.container .container-content .box-2 div{
+    display: flex;
+    flex-direction: column;
+}
+
+.container .container-content .box-2 .button-login{
+    font-size: 1.9rem;
+    padding: .8rem 0;
+    font-weight: 600;
+    border-radius: .8rem;
+    background-color: var(--cian-100);
+    cursor: pointer;
+    border: none;
+    margin: 3rem 0 0 0;
+}
+
+.container .container-content .box-2 .button-login:hover{
+    transition: .3s;
+    background-color: var(--cian-100-houver);
+}
+
+.container .container-content .box-2 div button, 
+.container .container-content .box-2 div i{
+    color: var(--white-100);
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+.container .container-content .box-2 div i{
+    padding-right: 1rem;
+}
+
+.container .container-content .box-2 div button:first-child{
+    margin-top: 0;
+}
+
+.container .container-content .box-2 div button{
+    margin: 1rem 0;
+    border-radius: .8rem;
+    padding: .8rem 0;
+    width: 100%;
+    background: none;
+    cursor: pointer;
+    border: .2rem solid;
+    border-color: var(--white-400);
+}
+
+.container .container-content .box-3{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.container .container-content .box-3 button{
+    background: none;
+    border: none;
+}
+
+.container .container-content .box-3 .button{
+    color: var(--white-100);
+    font-size: 1.4rem;
+    text-decoration: none;
+}
+
+.container .container-content .box-3 .button:hover{
+    cursor: pointer;
+}
+.container .container-content .box-3 span{
+    font-size: 1.4rem;
+    padding-right: .4rem;
+    color: var(--white-300);
+}
+
+
+.img-1, 
+.img-2{
+    border-radius: 80rem;
+    height: 50rem;
+    width: 50rem;
+    position: fixed;
+    background-color: var(--white-100);
+}
+
+.login .img-1{
+    left: -32rem;
+    top: -20rem;
+}
+
+.login .img-2{
+    background-color: var(--white-100);
+    border-radius: 80rem;
+    left: 133rem;
+    top: 50rem;
+}

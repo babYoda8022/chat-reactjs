@@ -1,0 +1,20 @@
+
+.img-3, 
+.img-4{
+    border-radius: 80rem;
+    height: 50rem;
+    width: 50rem;
+    position: fixed;
+    background-color: var(--white-100);
+}
+
+.login .img-3{
+    left: -32rem;
+    top: 50rem;
+}
+
+
+.login .img-4{
+    left: 133rem;
+    top: -30rem;
+}
