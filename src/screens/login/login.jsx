@@ -10,11 +10,16 @@ export default function Login() {
 
   const navegate = useNavigate()
 
+  auth.onAuthStateChanged((user)=>{
+    if(user){
+      navegate("/chat")
+    }
+  })
+
   function signInWithFacebook(){
     const provider = new FacebookAuthProvider()
     signInWithPopup(auth, provider)
-    .then((respo)=>{
-      console.log(respo)
+    .then((user)=>{
       navegate("/chat")
     }).catch((error)=>{
       console.log(error)
@@ -25,7 +30,6 @@ export default function Login() {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
     .then((respo)=>{
-      console.log(respo)
       navegate("/chat")
     }).catch((error)=>{
       console.log(error)
