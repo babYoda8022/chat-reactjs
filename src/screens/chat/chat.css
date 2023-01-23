@@ -111,6 +111,7 @@
     border-top-right-radius: 2rem;
     margin-top: 1rem;
     margin-right: 1rem;
+    background-color: var(--cian-720);
 }
 
 .chat-content .chat-main .chat-main-top{
@@ -166,12 +167,12 @@
 
 .chat-content .chat-main .chat-main-content .chat-main-content-down{
     display: flex;
-    padding: 0rem 10rem;
+    padding: 0rem 3rem;
     padding-bottom: 2rem;
 }
 
 .chat-content .chat-main .chat-main-content .chat-main-content-down input{
-    font-size: 2rem;
+    font-size: 1.7rem;
     text-decoration: none;
     background: none;
     border: none;
@@ -182,15 +183,24 @@
 
 .chat-content .chat-main .chat-main-content .chat-main-content-down .input-text{
     background-color: var(--cian-900);
-    padding: .8rem 1rem;
+    padding: 1rem 1.5rem;
     border-radius: .5rem;
     width: 100%;
+    display: flex;
+}
+
+.chat-content .chat-main .chat-main-content .chat-main-content-down .input-text i{
+    color: var(--white-100);
+    font-size: 2rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    cursor: pointer;
 }
 
 .chat-content .chat-main .chat-main-content .chat-main-content-down button{
     background: none;
     border: none;
-    background-color: var(--white-200);
+    background-color: var(--cian-100);
     cursor: pointer;
     border-radius: .5rem;
     margin-left: 2rem;
@@ -198,7 +208,7 @@
 
 .chat-content .chat-main .chat-main-content .chat-main-content-down button:hover{
     transition: .3s;
-    background-color: var(--white-100);
+    background-color: var(--cian-100-houver);
     
 }
 
@@ -206,4 +216,31 @@
     color: var(--cian-900);
     font-size: 2rem;
     padding: 1rem 1.5rem;
+}
+
+
+.chatHomePage{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.chatHomePage h1{
+    color: var(--white-100);
+    font-size: 5rem;
+    padding-bottom: 1rem;
+}
+
+.chatHomePage p{
+    font-size: 2.2rem;
+    color: var(--white-100);
+    font-weight: 300;
+    padding-bottom: 1rem;
+}
+
+.chatHomePage i{
+    font-size: 7rem;
+    color: var(--cian-100);
 }

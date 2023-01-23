@@ -1,0 +1,34 @@
+
+.text-balloon-receiver{
+    background-color: var(--cian-900);
+    border-top-right-radius: .9rem;
+    border-bottom-right-radius: .9rem;
+    border-bottom-left-radius: .9rem;
+    width: fit-content;
+    display: flex;
+}
+
+.text-balloon-receiver p{
+    color: var(--white-100);
+    font-size: 1.6rem;
+    padding: 1rem 0rem 1rem 1.5rem;
+}
+.text-balloon-receiver .balloon-time{
+    display: flex;
+    align-items: flex-end;
+    padding-right: 1.5rem;
+}
+
+.text-balloon-receiver .balloon-time p{
+    font-size: 1.1rem;
+    padding-left: .8rem;
+    color: var(--white-300);
+}
+
+#sender{
+    background-color: var(--cian-100);
+}
+
+#sender p:last-child{
+    color: var(--cian-020);
+}
