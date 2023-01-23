@@ -1,44 +1,78 @@
 
 import { useEffect, useState } from "react"
 import { auth } from "../../service/firebase"
+import { useNavigate } from "react-router-dom"
 
 import "./chat.css"
+import ChatList from "../../components/chatList/chatList"
+
 
 export default function Chat() {
 
-  const [userTrue, setUserTrue] = useState(false)
+  const navegate = useNavigate()
 
   const [user, setUser] = useState({
     nome: null,
     photoPath: null
   })
 
-  auth.onAuthStateChanged((userCredential)=>{
-    if(userCredential){
-      setUserTrue(true)
-      setUser({nome: userCredential.displayName, photoPath: userCredential.photoURL})
+  auth.onAuthStateChanged((userCredential) => {
+    if (userCredential) {
+      setUser({ nome: userCredential.displayName, photoPath: userCredential.photoURL })
+    } else {
+      navegate("/")
     }
   })
   return (
     <div className="chat">
       <div className="chat-content">
         <div className="navbar">
-          <h1 className="userName">Luiz Roberto</h1>
+          ....
         </div>
         <div className="sidbar">
-          <h1>Messages(23)</h1>
+          <div className="sidbar-top">
+            <h1>Messages</h1>
+            <span>(23)</span>
+          </div>
           <div className="search">
-            <input type="text" placeholder="Search"/>
-            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search" />
+            <button>
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+          <div className="chat-content-chatList">
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
+            <ChatList></ChatList>
           </div>
         </div>
-        <div className="container-chat">
-          <div className="topbar">
+        <div className="chat-main">
+          <div className="chat-main-top">
             <img src={user.photoPath} alt="" />
-            <span>{user.nome}</span>
+            <div>
+              <h1>{user.nome}</h1>
+              <span>Online</span>
+            </div>
           </div>
-          <div className="main"></div>
-          <div className="footerbar"></div>
+          <div className="chat-main-content">
+            <div className="chat-main-content-chat-content">
+            </div>
+            <div className="chat-main-content-down">
+              <div className="input-text">
+                <input type="text" name="" id="" placeholder="Message"/>
+              </div>
+              <button>
+                <i class="bi bi-send"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
