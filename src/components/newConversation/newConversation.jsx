@@ -1,19 +1,11 @@
 
+import { useEffect } from "react"
 import { useState } from "react"
 import "./newConversation.css"
 
-export default function NewConversation({open, func}) {
+export default function NewConversation({open, func, conversation}) {
 
-    const [conversationList, setConversationList] = useState([
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-    ])
+    useEffect(()=>{console.log(conversation)},[])
 
     return (
         <div className="newConversation" id={open? "": "close"}>
@@ -34,12 +26,12 @@ export default function NewConversation({open, func}) {
                 </div>
                 <div className="newConversation-main">
                    {
-                    conversationList.map((item, key)=>{
+                    conversation.map((item, key)=>{
                         return <>
                             <div className="newConversation-main-list" key={key}>
-                                <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
+                                <img src={item.avatar} alt="" />
                                 <div>
-                                    <h1>NOME</h1>
+                                    <h1>{item.name}</h1>
                                     <p>Online</p>
                                 </div>
                             </div>

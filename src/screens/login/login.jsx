@@ -16,7 +16,7 @@ export default function Login() {
     }
   })
 
-  function signInWithFacebook(){
+  async function signInWithFacebook(){
     const provider = new FacebookAuthProvider()
     signInWithPopup(auth, provider)
     .then((user)=>{

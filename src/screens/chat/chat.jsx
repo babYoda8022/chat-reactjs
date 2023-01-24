@@ -1,6 +1,6 @@
 
 import { useEffect, useState, useRef } from "react"
-import { auth } from "../../service/firebase"
+import { auth, db } from "../../service/firebase"
 import { useNavigate } from "react-router-dom"
 
 import "./chat.css"
@@ -14,93 +14,118 @@ export default function Chat() {
   const body = useRef()
   const navegate = useNavigate()
 
-  const [chatList, setChatList] = useState([
-    {chatId: 1, chatTitle: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar2.png"}, 
-    {chatId: 2, chatTitle: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar2.png"}, 
-    {chatId: 3, chatTitle: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar2.png"}
-  ])
-  
-  const [user, setUser] = useState({
-    id: 1234, 
-    avatar: "https://www.w3schools.com/howto/img_avatar2.png",
-    name: "Luiz Roberto"
-  })
-  
+  const [chatList, setChatList] = useState([])
+  const [newChatList, setNewChatList] = useState([])
+
+  const [user, setUser] = useState({})
+
   const [activeChat, setActiveChat] = useState({})
   const [text, setText] = useState([])
-  
+
   const [messageList, setMessageList] = useState([
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaassssssssssssssss"},
-    {author:1234, body:"abaaaaa"},
-    {author:1234, body:"abaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaassssssssssssssss"},
-    {author:1234, body:"abaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaassssssssssssssss"},
-    {author:1234, body:"abaaaaa"},
-    {author:1234, body:"abaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaa"},
-    {author:123, body:"aaaaaassssssssssssssss"},
-    {author:1234, body:"abaaaaa"},
-    {author:123, body:"aaaaaa"},
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaassssssssssssssss" },
+    { author: 1234, body: "abaaaaa" },
+    { author: 1234, body: "abaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaassssssssssssssss" },
+    { author: 1234, body: "abaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaassssssssssssssss" },
+    { author: 1234, body: "abaaaaa" },
+    { author: 1234, body: "abaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaa" },
+    { author: 123, body: "aaaaaassssssssssssssss" },
+    { author: 1234, body: "abaaaaa" },
+    { author: 123, body: "aaaaaa" },
   ])
 
   const [openNewConversation, setOpenNewConversation] = useState(false)
 
-  function OpenNewConversation(){
-    if(openNewConversation){
+  function OpenNewConversation() {
+    if (openNewConversation) {
       setOpenNewConversation(false)
-    }else{
+    } else {
       setOpenNewConversation(true)
     }
   }
 
-  function logout(){
-    auth.signOut().then(()=>{
+  function logout() {
+    auth.signOut().then(() => {
       navegate("/")
     })
   }
+  useEffect(() => {
+    if (auth.currentUser) {
+      setCurrentUser()
+      getListContact()
+    } else {
+      navegate("/")
+    }
+  }, [])
 
-  window.onbeforeunload =  auth.onAuthStateChanged(async (userCredential) => {
-    // if (userCredential) {
-    //   await setUser({ nome: userCredential.displayName, photoPath: userCredential.photoURL })
-    // } else {
-    //   navegate("/")
-    // }
-  })
-
-  useEffect(()=>{
-    if(body.current != undefined){
-      if(body.current.scrollHeight > body.current.offsetHeight){
+  useEffect(() => {
+    if (body.current != undefined) {
+      if (body.current.scrollHeight > body.current.offsetHeight) {
         body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
       }
     }
   }, [messageList, activeChat.chatId])
+
+  async function getListContact() {
+    let list = []
+    let results = await db.collection("users").get()
+    console.log(results)
+    results.forEach(result => {
+      let data = result.data()
+      if (result.id != auth.currentUser.uid) {
+        list.push({
+          id: result.id,
+          name: data.name,
+          avatar: data.avatar
+        })
+      }
+    })
+    setNewChatList(list)
+  }
+
+  function setCurrentUser(){
+    db.collection("users").doc(auth.currentUser.uid).set({
+      name: auth.currentUser.displayName,
+      avatar: auth.currentUser.photoURL
+    }, { merge: true })
+    let newUser = {
+      id: auth.currentUser.uid,
+      name: auth.currentUser.displayName,
+      avatar: auth.currentUser.photoURL
+    }
+    setUser(newUser)
+  }
 
   return (
     <div className="chat">
       <div className="chat-content">
         <div className="navbar">
           <div className="navbar-top">
-             <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
+            <img src={user.avatar} alt="" />
           </div>
           <div className="navbar-main">
-            <button onClick={()=>{OpenNewConversation()}}>
+            <button onClick={() => { OpenNewConversation() }}>
               <i class="bi bi-chat-square-dots-fill"></i>
             </button>
           </div>
-          <button className="navbar-bottom" onClick={()=>{logout()}}>
+          <button className="navbar-bottom" onClick={() => { logout() }}>
             <i class="bi bi-box-arrow-left"></i>
           </button>
         </div>
-        <NewConversation open={openNewConversation} func={OpenNewConversation}/>
+        <NewConversation  open={openNewConversation} 
+                          func={OpenNewConversation}
+                          conversation={newChatList} />
         <div className="sidbar">
           <div className="sidbar-top">
             <h1>Messages</h1>
@@ -114,11 +139,11 @@ export default function Chat() {
           </div>
           <div className="chat-content-chatList">
             {chatList.map((item, key) => {
-              return <ChatList 
-                      key={key}
-                      data={item}
-                      active={activeChat.chatId == chatList[key].chatId} 
-                      onClick={()=>{setActiveChat(chatList[key])}}/>
+              return <ChatList
+                key={key}
+                data={item}
+                active={activeChat.chatId == chatList[key].chatId}
+                onClick={() => { setActiveChat(chatList[key]) }} />
             })}
 
           </div>
@@ -136,18 +161,18 @@ export default function Chat() {
               </div>
               <div className="chat-main-content">
                 <div ref={body} className="chat-main-content-chat-content">
-                  {messageList.map((item, key)=>{
-                    return <ChatBalloon  key={key}
-                                         data={item}
-                                         currentUser={user}/>
+                  {messageList.map((item, key) => {
+                    return <ChatBalloon key={key}
+                      data={item}
+                      currentUser={user} />
                   })}
                 </div>
                 <div className="chat-main-content-down">
                   <div className="input-text">
-                    <input  type="text"
-                            placeholder="Message" 
-                            value={text}
-                            onChange={e=>setText(e.target.value)}/>
+                    <input type="text"
+                      placeholder="Message"
+                      value={text}
+                      onChange={e => setText(e.target.value)} />
                     <i class="bi bi-emoji-laughing"></i>
                   </div>
                   <button>
