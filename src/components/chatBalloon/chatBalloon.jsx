@@ -1,23 +1,15 @@
 
 import "./chatBalloon.css"
 
-export function ChatBalloonReciver(props) {
+export function ChatBalloon({data, currentUser}) {
     return (
-        <div className="text-balloon-receiver">
-            <p>{props.txt}</p>
-            <div className="balloon-time">
-                <p>12:00</p>
-            </div>
-        </div>
-    )
-}
-
-export function ChatBalloonSender(props) {
-    return (
-        <div className="text-balloon-receiver" id="sender">
-            <p>{props.txt}</p>
-            <div className="balloon-time">
-                <p>12:00</p>
+        
+        <div className="text-balloon-line" id={currentUser.id == data.author? "sender": ""}>
+            <div className="text-balloon">
+                <p>{data.body}</p>
+                <div className="balloon-time">
+                    <p>12:00</p>
+                </div>
             </div>
         </div>
     )

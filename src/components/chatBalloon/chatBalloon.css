@@ -1,34 +1,45 @@
 
-.text-balloon-receiver{
+.text-balloon-line{
+    display: flex;
+}
+
+.text-balloon{
     background-color: var(--cian-900);
     border-top-right-radius: .9rem;
     border-bottom-right-radius: .9rem;
     border-bottom-left-radius: .9rem;
     width: fit-content;
     display: flex;
+    margin: 1rem;
 }
 
-.text-balloon-receiver p{
+.text-balloon p{
     color: var(--white-100);
     font-size: 1.6rem;
     padding: 1rem 0rem 1rem 1.5rem;
 }
-.text-balloon-receiver .balloon-time{
+.text-balloon .balloon-time{
     display: flex;
     align-items: flex-end;
     padding-right: 1.5rem;
 }
 
-.text-balloon-receiver .balloon-time p{
+.text-balloon .balloon-time p{
     font-size: 1.1rem;
     padding-left: .8rem;
     color: var(--white-300);
 }
 
 #sender{
+    justify-content: flex-end;
+}
+
+#sender div:first-child{
+    border-top-left-radius: .9rem;
+    border-top-right-radius: 0rem;
     background-color: var(--cian-100);
 }
 
-#sender p:last-child{
+#sender div:first-child p:last-child{
     color: var(--cian-020);
 }

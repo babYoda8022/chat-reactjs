@@ -72,3 +72,6 @@
 }
 
 
+#selected{
+    background-color: var(--cian-900);
+}

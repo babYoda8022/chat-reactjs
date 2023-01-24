@@ -1,32 +1,72 @@
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { auth } from "../../service/firebase"
 import { useNavigate } from "react-router-dom"
 
 import "./chat.css"
 import ChatList from "../../components/chatList/chatList"
-import { ChatBalloonReciver, ChatBalloonSender } from "../../components/chatBalloon/chatBalloon"
+import { ChatBalloon } from "../../components/chatBalloon/chatBalloon"
 
 
 export default function Chat() {
 
+  const body = useRef()
+
   const navegate = useNavigate()
-  const [chatList, setChatList] = useState([{chatId: 1}])
-  const [activeChat, setActiveChat] = useState({})
 
-
+  const [chatList, setChatList] = useState([
+    {chatId: 1, chatTitle: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar2.png"}, 
+    {chatId: 2, chatTitle: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar2.png"}, 
+    {chatId: 3, chatTitle: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar2.png"}
+  ])
+  
   const [user, setUser] = useState({
-    nome: "Luiz Roberto",
-    photoPath: "https://www.w3schools.com/howto/img_avatar2.png"
+    id: 1234, 
+    avatar: "https://www.w3schools.com/howto/img_avatar2.png",
+    name: "Luiz Roberto"
+  })
+  
+  const [activeChat, setActiveChat] = useState({})
+  const [text, setText] = useState([])
+  
+  const [messageList, setMessageList] = useState([
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaassssssssssssssss"},
+    {author:1234, body:"abaaaaa"},
+    {author:1234, body:"abaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaassssssssssssssss"},
+    {author:1234, body:"abaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaassssssssssssssss"},
+    {author:1234, body:"abaaaaa"},
+    {author:1234, body:"abaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaa"},
+    {author:123, body:"aaaaaassssssssssssssss"},
+    {author:1234, body:"abaaaaa"},
+    {author:123, body:"aaaaaa"},
+  ])
+
+  window.onbeforeunload =  auth.onAuthStateChanged(async (userCredential) => {
+    // if (userCredential) {
+    //   await setUser({ nome: userCredential.displayName, photoPath: userCredential.photoURL })
+    // } else {
+    //   navegate("/")
+    // }
   })
 
-  auth.onAuthStateChanged((userCredential) => {
-    if (userCredential) {
-      //setUser({ nome: userCredential.displayName, photoPath: userCredential.photoURL })
-    } else {
-      navegate("/")
+  useEffect(()=>{
+    if(body.current != undefined){
+      if(body.current.scrollHeight > body.current.offsetHeight){
+        body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
+      }
     }
-  })
+  }, [messageList, activeChat.chatId])
 
   return (
     <div className="chat">
@@ -47,7 +87,11 @@ export default function Chat() {
           </div>
           <div className="chat-content-chatList">
             {chatList.map((item, key) => {
-              return <ChatList key={key} onClick={()=>{setActiveChat(chatList[key])}}/>
+              return <ChatList 
+                      key={key}
+                      data={item}
+                      active={activeChat.chatId == chatList[key].chatId} 
+                      onClick={()=>{setActiveChat(chatList[key])}}/>
             })}
 
           </div>
@@ -57,20 +101,26 @@ export default function Chat() {
             activeChat.chatId != undefined &&
             <>
               <div className="chat-main-top">
-                <img src={user.photoPath} alt="" />
+                <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
                 <div>
                   <h1>{user.nome}</h1>
                   <span>Online</span>
                 </div>
               </div>
               <div className="chat-main-content">
-                <div className="chat-main-content-chat-content">
-                  <ChatBalloonReciver txt="OPA" />
-                  <ChatBalloonSender txt="OPA" />
+                <div ref={body} className="chat-main-content-chat-content">
+                  {messageList.map((item, key)=>{
+                    return <ChatBalloon  key={key}
+                                         data={item}
+                                         currentUser={user}/>
+                  })}
                 </div>
                 <div className="chat-main-content-down">
                   <div className="input-text">
-                    <input type="text" name="" id="" placeholder="Message" />
+                    <input  type="text"
+                            placeholder="Message" 
+                            value={text}
+                            onChange={e=>setText(e.target.value)}/>
                     <i class="bi bi-emoji-laughing"></i>
                   </div>
                   <button>

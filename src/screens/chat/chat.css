@@ -150,9 +150,9 @@
 }
 
 .chat-content .chat-main .chat-main-content .chat-main-content-chat-content{
-    flex: 1;
     margin: 1.5rem 1rem;
     overflow-y: scroll;
+    height: 57.2rem;
 }
 
 .chat-content .chat-main .chat-main-content .chat-main-content-chat-content::-webkit-scrollbar{
