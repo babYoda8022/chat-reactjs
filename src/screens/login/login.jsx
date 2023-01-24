@@ -12,7 +12,7 @@ export default function Login() {
 
   auth.onAuthStateChanged((user)=>{
     if(user){
-      navegate("/chat")
+      //navegate("/chat")
     }
   })
 

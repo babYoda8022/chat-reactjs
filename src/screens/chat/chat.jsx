@@ -1,3 +1,4 @@
+import firebase from "firebase/compat/app";
 
 import { useEffect, useState, useRef } from "react"
 import { auth, db } from "../../service/firebase"
@@ -21,29 +22,7 @@ export default function Chat() {
 
   const [activeChat, setActiveChat] = useState({})
   const [text, setText] = useState([])
-
-  const [messageList, setMessageList] = useState([
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaassssssssssssssss" },
-    { author: 1234, body: "abaaaaa" },
-    { author: 1234, body: "abaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaassssssssssssssss" },
-    { author: 1234, body: "abaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaassssssssssssssss" },
-    { author: 1234, body: "abaaaaa" },
-    { author: 1234, body: "abaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaa" },
-    { author: 123, body: "aaaaaassssssssssssssss" },
-    { author: 1234, body: "abaaaaa" },
-    { author: 123, body: "aaaaaa" },
-  ])
+  const [messageList, setMessageList] = useState([])
 
   const [openNewConversation, setOpenNewConversation] = useState(false)
 
@@ -64,10 +43,15 @@ export default function Chat() {
     if (auth.currentUser) {
       setCurrentUser()
       getListContact()
+      onChatList()
     } else {
       navegate("/")
     }
   }, [])
+
+  useEffect(()=>{
+     chatContent()
+  },[activeChat.chatId])
 
   useEffect(() => {
     if (body.current != undefined) {
@@ -77,10 +61,21 @@ export default function Chat() {
     }
   }, [messageList, activeChat.chatId])
 
+  function onChatList(){
+    db.collection("users").doc(auth.currentUser.uid).onSnapshot((doc)=>{
+      if(doc.exists){
+
+        let data = doc.data()
+        if(data.chats){
+          setChatList(data.chats)
+        }
+      }
+    })
+  }
+
   async function getListContact() {
     let list = []
     let results = await db.collection("users").get()
-    console.log(results)
     results.forEach(result => {
       let data = result.data()
       if (result.id != auth.currentUser.uid) {
@@ -105,6 +100,36 @@ export default function Chat() {
       avatar: auth.currentUser.photoURL
     }
     setUser(newUser)
+  }
+
+  function chatContent(){
+    db.collection("chats").doc(activeChat.chatId).onSnapshot((doc)=>{
+      if(doc.exists){
+        let data = doc.data()
+        setMessageList(data.messages)
+      }
+    })
+  }
+
+  function keyPressEnter(e){
+    if(e.keyCode === 13){
+      sendMessage()
+    }
+  }
+
+  function sendMessage(){
+    if(text != ""){
+      let now = new Date()
+      db.collection("chats").doc(activeChat.chatId).update({
+        messages: firebase.firestore.FieldValue.arrayUnion({
+          type: "text",
+          author: auth.currentUser.uid,
+          body: text,
+          date: now
+        })
+      })
+      setText("")
+    }
   }
 
   return (
@@ -153,9 +178,9 @@ export default function Chat() {
             activeChat.chatId != undefined &&
             <>
               <div className="chat-main-top">
-                <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
+                <img src={activeChat.image} alt="" />
                 <div>
-                  <h1>{user.nome}</h1>
+                  <h1>{activeChat.title}</h1>
                   <span>Online</span>
                 </div>
               </div>
@@ -172,10 +197,11 @@ export default function Chat() {
                     <input type="text"
                       placeholder="Message"
                       value={text}
-                      onChange={e => setText(e.target.value)} />
+                      onChange={e => setText(e.target.value)} 
+                      onKeyUp={keyPressEnter}/>
                     <i class="bi bi-emoji-laughing"></i>
                   </div>
-                  <button>
+                  <button onClick={()=>{sendMessage()}}>
                     <i class="bi bi-send"></i>
                   </button>
                 </div>
