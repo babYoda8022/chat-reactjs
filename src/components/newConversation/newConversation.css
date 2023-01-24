@@ -1,0 +1,149 @@
+
+#close{
+    transition: .4s;
+    left: -50rem;
+}
+
+.newConversation{
+    transition: .5s;
+    left: 0;
+    width: 44.5rem;
+    height: 100%;
+    position: absolute;
+    padding-left: 8.3rem;
+    background-color: var(--cian-800);
+}
+
+.newConversation .newConversation-container{
+    height: 100%;
+    margin-left: 3rem;
+}
+
+.newConversation .newConversation-top div:first-child{
+    display: flex;
+    align-items: center;
+    padding-bottom: 1.5rem;
+}
+
+.newConversation .newConversation-top div:first-child button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+    padding: .3rem 1rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.newConversation .newConversation-top div:first-child button:hover{
+    transition: .2s;
+    background-color: var(--cian-100);
+}
+
+.newConversation .newConversation-top div:first-child button i{
+    font-size: 2.5rem;
+    color: var(--white-100);
+}
+
+.newConversation .newConversation-top div:first-child h1{
+    font-size: 2.2rem;
+    color: var(--white-100);
+}
+
+.newConversation .newConversation-top{
+    padding-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.newConversation .newConversation-top .newConversation-top-search{
+    background-color: var(--cian-900);
+    display: flex;
+    align-items: center;
+    border-radius: .8rem;
+    margin-bottom: 1rem;
+    margin-right: 3rem;
+}
+
+.newConversation .newConversation-top .newConversation-top-search input{
+    font-size: 1.6rem;
+    border: none;
+    outline: none;
+    width: 100%;
+    margin: 1rem 1rem;
+    margin-right: 1rem;
+    background: none;
+    color: var(--white-100);
+    font-weight: 300;
+}
+
+.newConversation .newConversation-top .newConversation-top-search button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--white-100);
+}
+
+.newConversation .newConversation-top .newConversation-top-search button:hover{
+    color: var(--cian-100-houver);
+}
+
+
+.newConversation .newConversation-top .newConversation-top-search button i{
+    font-size: 1.8rem;
+    padding-right: 1.5rem;
+}
+
+.newConversation .newConversation-main{
+    margin-top: 1rem;
+    height: 60rem;
+    overflow-y: scroll;
+    padding-right: 3rem;
+}
+
+.newConversation .newConversation-main::-webkit-scrollbar{
+    background-color: var(--cian-800);
+    width: .6rem;
+}
+
+.newConversation .newConversation-main::-webkit-scrollbar-thumb{
+    background-color: var(--white-500);
+    border-radius: 1rem; 
+}
+
+.newConversation .newConversation-main .newConversation-main-list{
+    display: flex;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: .6rem;
+    margin-top: .2rem;
+}
+
+.newConversation .newConversation-main .newConversation-main-list:hover{
+    transition: .2s;
+    background-color: var(--cian-700);
+}
+
+.newConversation .newConversation-main .newConversation-main-list img{
+    width: 6rem;
+    border-radius: 3rem;
+}
+
+.newConversation .newConversation-main .newConversation-main-list h1{
+    color: var(--white-100);
+    font-size: 1.9rem;
+    margin-top: .6rem;
+    width: 28rem;
+    margin-left: 1.5rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.newConversation .newConversation-main .newConversation-main-list p{
+    margin-left: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--red);
+}

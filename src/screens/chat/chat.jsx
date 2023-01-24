@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom"
 import "./chat.css"
 import ChatList from "../../components/chatList/chatList"
 import { ChatBalloon } from "../../components/chatBalloon/chatBalloon"
+import NewConversation from "../../components/newConversation/newConversation"
 
 
 export default function Chat() {
 
   const body = useRef()
-
   const navegate = useNavigate()
 
   const [chatList, setChatList] = useState([
@@ -52,6 +52,22 @@ export default function Chat() {
     {author:123, body:"aaaaaa"},
   ])
 
+  const [openNewConversation, setOpenNewConversation] = useState(false)
+
+  function OpenNewConversation(){
+    if(openNewConversation){
+      setOpenNewConversation(false)
+    }else{
+      setOpenNewConversation(true)
+    }
+  }
+
+  function logout(){
+    auth.signOut().then(()=>{
+      navegate("/")
+    })
+  }
+
   window.onbeforeunload =  auth.onAuthStateChanged(async (userCredential) => {
     // if (userCredential) {
     //   await setUser({ nome: userCredential.displayName, photoPath: userCredential.photoURL })
@@ -72,8 +88,19 @@ export default function Chat() {
     <div className="chat">
       <div className="chat-content">
         <div className="navbar">
-          ....
+          <div className="navbar-top">
+             <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
+          </div>
+          <div className="navbar-main">
+            <button onClick={()=>{OpenNewConversation()}}>
+              <i class="bi bi-chat-square-dots-fill"></i>
+            </button>
+          </div>
+          <button className="navbar-bottom" onClick={()=>{logout()}}>
+            <i class="bi bi-box-arrow-left"></i>
+          </button>
         </div>
+        <NewConversation open={openNewConversation} func={OpenNewConversation}/>
         <div className="sidbar">
           <div className="sidbar-top">
             <h1>Messages</h1>

@@ -7,12 +7,53 @@
 }
 
 .chat .navbar{
+    z-index: 1;
     padding: 2rem 0;
     display: flex;
-    justify-content: center;
     background-color: var(--cian-900);
     color: var(--white-100);
-    width: 10rem;
+    width: 12rem;
+    flex-direction: column;
+}
+
+.chat .navbar .navbar-top, 
+.chat .navbar .navbar-bottom,
+.chat .navbar .navbar-main{
+    display: flex;
+    justify-content: center;
+}
+
+.chat .navbar .navbar-top img{
+    width: 6rem;
+    border-radius: 9rem;
+}
+
+.chat .navbar .navbar-main{
+    flex: 1;
+    flex-direction: column;
+}
+
+.chat .navbar .navbar-bottom{
+    padding-right: .6rem;
+}
+
+.chat .navbar .navbar-main button,
+.chat .navbar .navbar-bottom {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.chat .navbar .navbar-main button i,
+.chat .navbar .navbar-bottom i{
+    font-size: 3rem;
+    color: var(--white-100);
+}
+
+
+.chat .navbar .navbar-main button:hover,
+.chat .navbar .navbar-bottom:hover{
+    transition: .3s;
+    background-color: var(--cian-100);
 }
 
 .chat .navbar .userName{
@@ -78,6 +119,10 @@
 .chat .sidbar .search button i{
     font-size: 1.8rem;
     padding-right: 1.5rem;
+}
+
+.chat .sidbar .search button:hover{
+    color: var(--cian-100-houver);
 }
 
 .chat .chat-content{
