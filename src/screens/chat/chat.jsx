@@ -23,6 +23,7 @@ export default function Chat() {
   const [activeChat, setActiveChat] = useState({})
   const [text, setText] = useState([])
   const [messageList, setMessageList] = useState([])
+  const [chatUsers, setChatUsers] = useState([])
 
   const [openNewConversation, setOpenNewConversation] = useState(false)
 
@@ -64,7 +65,6 @@ export default function Chat() {
   function onChatList(){
     db.collection("users").doc(auth.currentUser.uid).onSnapshot((doc)=>{
       if(doc.exists){
-
         let data = doc.data()
         if(data.chats){
           setChatList(data.chats)
@@ -107,6 +107,7 @@ export default function Chat() {
       if(doc.exists){
         let data = doc.data()
         setMessageList(data.messages)
+        setChatUsers(data.users)
       }
     })
   }
@@ -117,7 +118,7 @@ export default function Chat() {
     }
   }
 
-  function sendMessage(){
+  async function sendMessage(){
     if(text != ""){
       let now = new Date()
       db.collection("chats").doc(activeChat.chatId).update({
@@ -129,6 +130,22 @@ export default function Chat() {
         })
       })
       setText("")
+      for(let i in chatUsers){
+        let u = await db.collection("users").doc(chatUsers[i]).get()
+        let uData = u.data()
+        if(uData.chats){
+          let chats = [...uData.chats];
+          for(let e in chats){
+            if(chats[e].chatId == activeChat.chatId){
+              chats[e].lastMessage = text
+              chats[e].lastMessageDate = now
+            }
+          }
+          await db.collection("users").doc(chatUsers[i]).update({
+            chats
+          })
+        }
+      }
     }
   }
 
@@ -148,9 +165,10 @@ export default function Chat() {
             <i class="bi bi-box-arrow-left"></i>
           </button>
         </div>
-        <NewConversation  open={openNewConversation} 
+        <NewConversation  state={openNewConversation}
+                          setState={setOpenNewConversation} 
                           func={OpenNewConversation}
-                          conversation={newChatList} />
+                          conversation={newChatList}/>
         <div className="sidbar">
           <div className="sidbar-top">
             <h1>Messages</h1>

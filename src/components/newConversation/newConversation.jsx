@@ -1,39 +1,47 @@
 import firebase from "firebase/compat/app";
 
-import { useState, useEffect } from "react"
 import { auth, db } from "../../service/firebase"
 import "./newConversation.css"
 
-export default function NewConversation({open, func, conversation}) {
+export default function NewConversation({func, conversation, state, setState}) {
+
+    function OpenNewConversation() {
+        if (state) {
+            setState(false)
+        } else {
+            setState(true)
+        }
+      }
 
      async function addNewChat(user1, user2){
-         let newChat = await db.collection("chats").add({
+        OpenNewConversation()
+        let newChat = await db.collection("chats").add({
              messages:[],
              users:[user1.uid, user2.id]
          })
 
-         db.collection("users").doc(user1.uid).update({
+        db.collection("users").doc(user1.uid).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 chatId: newChat.id,
                 title: user2.name,
                 image: user2.avatar,
                 with: user2.id
             })
-         })
+        })
 
-         db.collection("users").doc(user2.id).update({
+        db.collection("users").doc(user2.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 chatId: newChat.id,
                 title: user1.displayName,
                 image: user1.photoURL,
                 with: user1.uid
             })
-         })
+        })
 
      }
 
     return (
-        <div className="newConversation" id={open? "": "close"}>
+        <div className="newConversation" id={state? "": "close"}>
             <div className="newConversation-container">
                 <div className="newConversation-top">
                     <div>
@@ -54,7 +62,7 @@ export default function NewConversation({open, func, conversation}) {
                     conversation.map((item, key)=>{
                         return <>
                             <div className="newConversation-main-list" key={key}
-                                                                       onClick={async ()=>{await addNewChat(auth.currentUser, item), func}}>
+                                                                       onClick={async ()=>{await addNewChat(auth.currentUser, item)}}>
                                 <img src={item.avatar} alt="" />
                                 <div>
                                     <h1>{item.name}</h1>
