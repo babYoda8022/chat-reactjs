@@ -131,6 +131,11 @@
     color: var(--white-300);
 }
 
+.container .container-content .box-3 .creat-account{
+    color: var(--white-100);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
 
 .img-1, 
 .img-2{
