@@ -2,7 +2,6 @@ import firebase from "firebase/compat/app";
 
 import { useEffect, useState, useRef } from "react"
 import { auth, db } from "../../service/firebase"
-import { useNavigate } from "react-router-dom"
 
 import "./chat.css"
 import ChatList from "../../components/chatList/chatList"
@@ -10,10 +9,9 @@ import { ChatBalloon } from "../../components/chatBalloon/chatBalloon"
 import NewConversation from "../../components/newConversation/newConversation"
 
 
-export default function Chat() {
+export default function Chat({setLogin}) {
 
   const body = useRef()
-  const navegate = useNavigate()
 
   const [chatList, setChatList] = useState([])
   const [newChatList, setNewChatList] = useState([])
@@ -37,7 +35,7 @@ export default function Chat() {
 
   function logout() {
     auth.signOut().then(() => {
-      navegate("/")
+      setLogin(false)
     })
   }
   useEffect(() => {
@@ -46,7 +44,7 @@ export default function Chat() {
       getListContact()
       onChatList()
     } else {
-      navegate("/")
+      setLogin(false)
     }
   }, [])
 

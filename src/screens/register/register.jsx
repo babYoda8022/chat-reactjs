@@ -1,5 +1,5 @@
 import "./register.css"
-export default function Register() {
+export default function Register({setCreate}) {
 
   return (
     <div className="login">
@@ -17,7 +17,7 @@ export default function Register() {
             <input type="text" placeholder="Confirm password" />
           </div>
           <div className="box-2">
-            <button className="button-login">Create</button>
+            <button className="button-login" onClick={()=>{setCreate(false)}}>Create</button>
           </div>
         </div>
       </div>
